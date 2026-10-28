@@ -9,7 +9,9 @@ const registerSocketHandlers = require("./sockets/socketHandler");
 
 const PORT = Number(process.env.PORT || 5000);
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = (
+  process.env.CLIENT_ORIGIN || "http://localhost:5173,http://localhost:5174"
+).split(",").map((origin) => origin.trim()).filter(Boolean);
 
 async function start() {
   await connectDB();
