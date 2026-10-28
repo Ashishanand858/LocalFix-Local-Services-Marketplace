@@ -17,7 +17,12 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = (
+  process.env.CLIENT_ORIGIN || "http://localhost:5173,http://localhost:5174"
+)
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(
   helmet({
